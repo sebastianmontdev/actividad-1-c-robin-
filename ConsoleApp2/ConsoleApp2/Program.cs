@@ -1,4 +1,5 @@
 ﻿bool continuar = true;
+List<Estudiante> estudiantes = new List<Estudiante>();
 // abro un ciclo while para que el usuario decida cuando quiere salir del menu
 while (continuar)
 {
@@ -63,7 +64,7 @@ string nivel = Console.ReadLine();
             Console.WriteLine("ingrese su nombre");
             string Nombre = Console.ReadLine();
 
-            Console.WriteLine("ingrese la apellido");
+            Console.WriteLine("ingrese el apellido");
             string Apellido = Console.ReadLine();
             Console.WriteLine($" bienvenido {Nombre} {Apellido}!");
 
@@ -169,13 +170,11 @@ string nivel = Console.ReadLine();
                     case "2":
                         Console.WriteLine("ingrese el nombre de la tarea");
                         string nombreBuscar = Console.ReadLine();
-                        bool finded = false;
                         foreach (var tarea in tareasPendientes)
                         {
                             if (tarea == nombreBuscar)
                             {
                                 Console.WriteLine(tarea);
-                                finded = true;
                             }
                         }
 
@@ -217,10 +216,62 @@ string nivel = Console.ReadLine();
             Console.WriteLine(ciudadEncontrada);
             break;
         case "8":
+            Console.WriteLine("crud de una lista de una clase");
+            Console.WriteLine("1. registrar estudiante");
+            Console.WriteLine("2. mostrar estudiante");
+            Console.WriteLine("3. remover estudiante");
+            string option = Console.ReadLine();
+            switch (option)
+            {
+                case "1":
+                    Console.WriteLine("ingrese el nombre:");
+                    string nombre = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(nombre))
+                    {
+                        Console.WriteLine("El nombre es requerido");
+                        break;
+                    }
+                    Console.WriteLine("ingresa la nota: ");
+                    if (!int.TryParse(Console.ReadLine(), out int nota))
+                    {
+                        Console.WriteLine("Dato no valido.");
+                        break;
+                    }
+
+                    var estudianteCreado = new Estudiante(nombre, nota);
+                    estudiantes.Add(estudianteCreado);
+                    break;
+                case "2":
+                    Console.WriteLine("ingrese el nombre del estudiante");
+                    foreach (var datos in estudiantes)
+                    {
+                            Console.WriteLine($"Nombre: {datos.Nombre} - Nota: {datos.Nota}");
+                    }
+
+                    break;
+                case "3":
+                
+                    break;
+                case "4":
+                    Continue = false;
+                    break;
+            }
             break;
         //salir del menu
         case "9":
             continuar = false;
             break;
     }
-}    
+}
+// definir la clase
+public class Estudiante
+{
+    public string Nombre{ get; set; }
+    public int Nota{ get; set; }
+
+    public Estudiante(string nombre, int nota)
+    {
+        Nombre = nombre;
+        Nota = nota;
+    }
+}
